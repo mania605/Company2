@@ -429,9 +429,9 @@ footer article p {
 }
 
 .scroller {
-  width: 20px;
+  width: 10px;
   position: fixed;
-  right: 30px;
+  right: 40px;
   top: 50%;
   transform: translateY(-50%);
   z-index: 3;
