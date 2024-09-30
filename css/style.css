@@ -430,11 +430,38 @@ footer article p {
   color: #fff;
   text-align: center;
   margin-bottom: 100px;
+  opacity: 0;
+  transform: translateX(-200px);
+  transition: 0.5s 0s;
 }
 #news article {
-  width: 22%;
-  height: 300px;
+  width: 20%;
+  height: 250px;
   background-color: #fff;
+  opacity: 0;
+  transform: scale(2);
+  transition-duration: 0.5s;
+}
+#news article:nth-of-type(1) {
+  transition-delay: 0.2s;
+}
+#news article:nth-of-type(2) {
+  transition-delay: 0.3s;
+}
+#news article:nth-of-type(3) {
+  transition-delay: 0.4s;
+}
+#news article:nth-of-type(4) {
+  transition-delay: 0.5s;
+}
+
+#news.on h2 {
+  opacity: 1;
+  transform: translateX(0px);
+}
+#news.on article {
+  opacity: 1;
+  transform: scale(1);
 }
 
 #info {
