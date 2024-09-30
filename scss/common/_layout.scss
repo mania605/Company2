@@ -30,18 +30,22 @@ main {
 		margin-top: 80px;
 	}
 }
-.home > main{ //메인 페이지 전용 main Style
+
+//메인 페이지 전용 main style
+.home > main {
 	padding: 0px;
 }
 
 @media screen and (max-width: $tablet) {
 	main {
 		padding: 8vh 10vw;
+
 		h2 {
 			font-size: 13vw;
 		}
 	}
 }
+
 @media screen and (max-width: $mobile) {
 	main {
 		.breadcrumb {
@@ -49,4 +53,4 @@ main {
 			margin-top: 40px;
 		}
 	}
-} 
+}
