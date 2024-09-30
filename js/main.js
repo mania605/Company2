@@ -14,13 +14,12 @@ getPosArr(secArr);
 //브라우저 리사이즈 이벤트 발생할 때마다 새로운 값으로 갱신
 window.addEventListener("resize", () => {
   getPosArr(secArr);
+  modifyPos();
 });
 
 //scroll btn evnet
 scroll_btns.forEach((btn, idx) => {
-  btn.addEventListener("click", () => {
-    new Anime(window, { scroll: posArr[idx] });
-  });
+  btn.addEventListener("click", () => moveScroll(idx));
 });
 
 //window scroll event
@@ -40,11 +39,27 @@ function activation(arrEl, index) {
 
 //get box position array func
 function getPosArr(arrEl) {
-  //일단은 기존 posArr값을 비운뒤
-  //새로운 새로 위치값을 배열에 담아줌
   posArr = [];
   for (let el of arrEl) posArr.push(el.offsetTop);
 }
+
+//move scroll
+function moveScroll(index, speed = 500) {
+  new Anime(window, { scroll: posArr[index] }, { duration: speed });
+}
+
+//when resize modfying scroll position
+function modifyPos() { //모디파이 포즈가 실행될때마다 현재 활성화된 버튼의 순번 위치로 모션 없이 바로 스크롤 이동
+  const activeEl = document.querySelector("li.on");
+  //Array.from(유사배열) -유사배열을 순수배열형태로 변환해서 반환
+  //순수배열명.indexOf(특정배열) : 전체배열에서 특정배열값의 순번을 반환하는 메서드
+  //scroll_btns라는 버튼 그룹에서 on 클래스가 붙어있는 버튼의 순서값을 반환
+  const activeIndex = Array.from(scroll_btns).indexOf(activeEl);
+  moveScroll(activeIndex, 0);
+}
+
+
+
 // // 초기화 함수: 섹션의 위치를 갱신하는 함수
 // function updatePosArr() {
 //   posArr = Array.from(secArr).map(sec => sec.offsetTop); // 섹션의 offsetTop 값을 posArr에 저장
