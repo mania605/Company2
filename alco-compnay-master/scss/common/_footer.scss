@@ -1,0 +1,62 @@
+footer {
+	width: 100%;
+	padding: 100px 15vw;
+	background: #333;
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-between;
+
+	h1 {
+		font: 600 1.3rem/1 "orbitron";
+		color: #888;
+		display: flex;
+		align-items: flex-end;
+	}
+
+	article {
+		display: flex;
+		flex-wrap: wrap;
+
+		ul {
+			width: 100%;
+			color: #777;
+			display: flex;
+			justify-content: flex-end;
+			gap: 30px;
+			font-size: 0.8rem;
+			margin-bottom: 20px;
+		}
+		p {
+			display: flex;
+			width: 100%;
+			color: #888;
+			justify-content: flex-end;
+			letter-spacing: 2px;
+			font: 400 0.8rem/1 "orbitron";
+		}
+	}
+}
+
+@media screen and (max-width: $tablet) {
+	footer {
+		padding: 80px 10vw;
+	}
+}
+
+@media screen and (max-width: $mobile) {
+	footer {
+		padding: 60px 10vw;
+
+		article {
+			width: 100%;
+			margin-top: 30px;
+			ul {
+				width: 100%;
+				justify-content: flex-start;
+			}
+			p {
+				justify-content: flex-start;
+			}
+		}
+	}
+}
