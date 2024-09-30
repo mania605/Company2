@@ -18,10 +18,22 @@ scroll_btns.forEach((btn, idx) => {
 //window scroll event
 window.addEventListener("scroll", () => {
   const scroll = window.scrollY;
-  if (scroll >= posArr[0]) activation(scroll_btns, 0);
-  if (scroll >= posArr[1]) activation(scroll_btns, 1);
-  if (scroll >= posArr[2]) activation(scroll_btns, 2);
-  if (scroll >= posArr[3]) activation(scroll_btns, 3);
+  // if (scroll >= posArr[0]) activation(scroll_btns, 0);
+  // if (scroll >= posArr[1]) activation(scroll_btns, 1);
+  // if (scroll >= posArr[2]) activation(scroll_btns, 2);
+  // if (scroll >= posArr[3]) activation(scroll_btns, 3);
+
+  posArr.forEach((pos, idx) => {///각 섹션의 offsetTop 값이 담긴 posArr 배열을 반복
+    if (scroll >= pos) {  ///현재 스크롤 위치(scroll)가 각 섹션의 위치보다 크거나 같은 경우 
+      activation(scroll_btns, idx);   ///activation 함수를 호출
+    }
+  });
+
+  /*
+한줄로 배치하고 싶을 경우에는 &&연산자를 써도 됨 27번째줄 if문
+posArr.forEach((pos,idx) => scroll>=pos) && activation(scroll_btns,idx));
+
+  */
 });
 //activation func
 function activation(arrEl, index) {
