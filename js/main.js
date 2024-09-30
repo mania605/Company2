@@ -1,26 +1,34 @@
 import Anime from "./anime.js";
 
 //variables
-let posArr = []; //// 각 섹션의 위치값(위로부터 얼마나 떨어져 있는지)을 저장할 배열
+let posArr = [];
 const base = -400;
-const secArr = document.querySelector("main").children; //// main태그자식 요소들(섹션들)을 선택하여 배열처럼 저장
-const scroll_btns = document.querySelectorAll(".scroller li");//.scroller 클래스 내부의 li 요소들(스크롤 버튼들)을 선택하여 배열처럼 저장
+const secArr = document.querySelector("main").children;
+const scroll_btns = document.querySelectorAll(".scroller li");
 
 //init (get section position array)
-for (let sec of secArr) posArr.push(sec.offsetTop);////for (let sec of secArr): 각 섹션의 offsetTop 값을 posArr 배열에 추가
+//처음 로딩시 호출해서 초기 배열값 담아줌
+getPosArr(secArr);
+
+//get new position array whenever scrolls
+//브라우저 리사이즈 이벤트 발생할 때마다 새로운 값으로 갱신
+window.addEventListener("resize", () => {
+  getPosArr(secArr);
+});
 
 //scroll btn evnet
-scroll_btns.forEach((btn, idx) => {//// 각 스크롤 버튼에 클릭 이벤트를 추가
+scroll_btns.forEach((btn, idx) => {
   btn.addEventListener("click", () => {
-    new Anime(window, { scroll: posArr[idx] });////Anime 객체를 이용해 클릭한 버튼에 해당하는 섹션의 위치(posArr[idx])로 부드럽게 스크롤 이동하는 애니메이션을 실행
+    new Anime(window, { scroll: posArr[idx] });
   });
 });
 
 //window scroll event
 window.addEventListener("scroll", () => {
-  const scroll = window.scrollY;
   posArr.forEach((pos, idx) => {
-    if (window.scrollY >= pos + base) [scroll_btns, secArr].forEach(arr => activation(arr, idx));
+    if (window.scrollY >= pos + base) {
+      [scroll_btns, secArr].forEach(arr => activation(arr, idx));
+    }
   });
 });
 
@@ -29,6 +37,26 @@ function activation(arrEl, index) {
   for (const el of arrEl) el.classList.remove("on");
   arrEl[index].classList.add("on");
 }
+
+//get box position array func
+function getPosArr(arrEl) {
+  //일단은 기존 posArr값을 비운뒤
+  //새로운 새로 위치값을 배열에 담아줌
+  posArr = [];
+  for (let el of arrEl) posArr.push(el.offsetTop);
+}
+// // 초기화 함수: 섹션의 위치를 갱신하는 함수
+// function updatePosArr() {
+//   posArr = Array.from(secArr).map(sec => sec.offsetTop); // 섹션의 offsetTop 값을 posArr에 저장
+// }
+
+// // 초기 로드 시 위치값 업데이트
+// updatePosArr();
+
+// // 리사이즈 시 섹션 위치값 다시 계산
+// window.addEventListener('resize', () => {
+//   updatePosArr(); // 리사이즈될 때 섹션의 위치 재계산
+// });
 
 /*
 문제점1 -특정 위치로 스크롤 이동 후 브라우저 리사이즈 시 버튼(박스) 활성화 위치 어긋남 문제
@@ -45,3 +73,9 @@ function activation(arrEl, index) {
 문제점3원인 - 초기저장된 posArr의 이동 위치값과 브라우저 리사이즈시에 실제 이동해야 되는 위치값이 달라지기 때문
 
 */
+
+
+//get box position array func
+function PosArr(arrEl) {
+  for (let el of arrEl) posArr.push(el.offsetTop);
+}
