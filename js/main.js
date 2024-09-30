@@ -1,3 +1,15 @@
+1 parent
+76fedcd
+commit
+48cfc74
+1 file changed
+  + 10
+  - 10
+lines changed
+js / main.js
+  + 10
+  - 10
+Original file line number	Original file line	Diff line number	Diff line change
 import Anime from "./anime.js";
 
 //variables
@@ -7,11 +19,9 @@ const secArr = document.querySelector("main").children;
 const scroll_btns = document.querySelectorAll(".scroller li");
 
 //init (get section position array)
-//처음 로딩시 호출해서 초기 배열값 담아줌
 getPosArr(secArr);
 
 //get new position array whenever scrolls
-//브라우저 리사이즈 이벤트 발생할 때마다 새로운 값으로 갱신
 window.addEventListener("resize", () => {
   getPosArr(secArr);
   modifyPos();
@@ -24,16 +34,22 @@ scroll_btns.forEach((btn, idx) => {
 
 //window scroll event
 window.addEventListener("scroll", () => {
-  posArr.forEach((pos, idx) => {
-    if (window.scrollY >= pos + base) {
-      [scroll_btns, secArr].forEach(arr => activation(arr, idx));
+  posArr.forEach((_, idx) => {
+    //특정 영역사이일때만 해당 순번의 요소에만 on을 붙이고
+    if (window.scrollY >= posArr[idx] + base && window.scrollY < posArr[idx + 1] + base) {
+      scroll_btns[idx].classList.add("on");
+      secArr[idx].classList.add("on");
+    } else {
+      //해당 영역에서 벗어났을때는 해당 순번의 요소에만 on을 제거
+      scroll_btns[idx].classList.remove("on");
+      secArr[idx].classList.remove("on");
     }
   });
 });
 
 //activation func
 function activation(arrEl, index) {
-  for (const el of arrEl) el.classList.remove("on");
+  //for (const el of arrEl) el.removeClass("on");
   arrEl[index].classList.add("on");
 }
 
@@ -48,16 +64,12 @@ function moveScroll(index, speed = 500) {
   new Anime(window, { scroll: posArr[index] }, { duration: speed });
 }
 
-//when resize modfying scroll position
-function modifyPos() { //모디파이 포즈가 실행될때마다 현재 활성화된 버튼의 순번 위치로 모션 없이 바로 스크롤 이동
+//when resize modifying scroll position
+function modifyPos() {
   const activeEl = document.querySelector("li.on");
-  //Array.from(유사배열) -유사배열을 순수배열형태로 변환해서 반환
-  //순수배열명.indexOf(특정배열) : 전체배열에서 특정배열값의 순번을 반환하는 메서드
-  //scroll_btns라는 버튼 그룹에서 on 클래스가 붙어있는 버튼의 순서값을 반환
   const activeIndex = Array.from(scroll_btns).indexOf(activeEl);
   moveScroll(activeIndex, 0);
 }
-
 
 
 // // 초기화 함수: 섹션의 위치를 갱신하는 함수
@@ -88,9 +100,3 @@ function modifyPos() { //모디파이 포즈가 실행될때마다 현재 활성
 문제점3원인 - 초기저장된 posArr의 이동 위치값과 브라우저 리사이즈시에 실제 이동해야 되는 위치값이 달라지기 때문
 
 */
-
-
-//get box position array func
-function PosArr(arrEl) {
-  for (let el of arrEl) posArr.push(el.offsetTop);
-}
