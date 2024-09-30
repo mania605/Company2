@@ -30,6 +30,10 @@ main {
 		margin-top: 80px;
 	}
 }
+.home > main{ //메인 페이지 전용 main Style
+	padding: 0px;
+}
+
 @media screen and (max-width: $tablet) {
 	main {
 		padding: 8vh 10vw;
