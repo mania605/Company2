@@ -1,7 +1,7 @@
 .scroller {
 	width: 20px;
 	position: fixed;
-	right: 50px;
+	right: 30px;
 	top: 50%;
 	transform: translateY(-50%);
 	z-index: 3;
@@ -21,5 +21,11 @@
 			height: 100px;
 			background: #000;
 		}
+	}
+}
+
+@media screen and (max-width: $tablet){
+	.scroller{
+		right: 20px;
 	}
 }
