@@ -2,6 +2,7 @@ import Anime from "./anime.js";
 
 //variables
 let posArr = []; //// 각 섹션의 위치값(위로부터 얼마나 떨어져 있는지)을 저장할 배열
+const base = -400;
 const secArr = document.querySelector("main").children; //// main태그자식 요소들(섹션들)을 선택하여 배열처럼 저장
 const scroll_btns = document.querySelectorAll(".scroller li");//.scroller 클래스 내부의 li 요소들(스크롤 버튼들)을 선택하여 배열처럼 저장
 
@@ -19,7 +20,7 @@ scroll_btns.forEach((btn, idx) => {//// 각 스크롤 버튼에 클릭 이벤트
 window.addEventListener("scroll", () => {
   const scroll = window.scrollY;
   posArr.forEach((pos, idx) => {
-    if (window.scrollY >= pos) [scroll_btns, secArr].forEach(arr => activation(arr, idx));
+    if (window.scrollY >= pos + base) [scroll_btns, secArr].forEach(arr => activation(arr, idx));
   });
 });
 
