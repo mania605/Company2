@@ -16,20 +16,32 @@ scroll_btns.forEach((btn, idx) => {//// 각 스크롤 버튼에 클릭 이벤트
 });
 
 //window scroll event
-window.addEventListener("scroll", () => {
-  const scroll = window.scrollY;
+window.addEventListener("scroll", () => {////사용자가 스크롤할 때마다 실행되는 이벤트입니다. 현재 스크롤 위치를 계속 추적하고, 특정 섹션의 위치에 도달했는지를 확인
+  const scroll = window.scrollY;  ////현재 스크롤 위치를 픽셀 단위로 반환
   posArr.forEach((pos, idx) => {
-    //if (scroll >= pos) [scroll_btns, secArr].forEach(arr => activation(arr, idx));
-    if (scroll >= pos) {
+    if (scroll >= pos && scroll < pos + secArr[idx].offsetHeight) {
       activation(scroll_btns, idx);
       activation(secArr, idx);
     }
   });
+
 });
 
 //activation func
-function activation(arrEl, index) {
+function activation(arrEl, index) {////특정 배열(arrEl)에 대해 모든 요소에서 on 클래스를 제거한 후, index에 해당하는 요소에 on 클래스를 추가
   //arrEl.forEach(el => el.classList.remove("on"));
-  for (const el of arrEl) el.classList.remove("on");
+  for (const el of arrEl) el.classList.remove("on");  //arrEl: scroll_btns 또는 secArr와 같은 요소 배열입니다. 즉, 활성화할 버튼들이나 섹션들
   arrEl[index].classList.add("on");
 }
+
+
+//레이아웃 변경 시 섹션 위치가 업데이트되지 않음
+//문제점: 문제점: 만약 사용자가 브라우저 크기를 변경하거나 페이지 레이아웃이 변경되었을 때, 섹션의 offsetTop 값이 바뀔 수 있지만, 코드에서는 이를 다시 계산하지 않기 때문에 잘못된 섹션 위치가 참조될 수 있음.
+//원인: offsetTop 값은 초기 로딩 시에만 계산되고, 이후에는 브라우저 크기 변경이나 레이아웃 변경이 발생해도 업데이트되지 않음.
+//해결책:브라우저 크기 조정이나 콘텐츠가 변경될 때마다 posArr를 다시 계산하여 섹션의 위치값을 갱신해주는 로직필요
+function updatePosArr() {
+  posArr = []; // 기존 배열 초기화
+  for (let sec of secArr) posArr.push(sec.offsetTop); // 새로 위치값 저장
+}
+
+window.addEventListener('resize', updatePosArr);
